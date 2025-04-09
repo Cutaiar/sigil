@@ -64,7 +64,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container py-10 mx-auto space-y-8">
+      <div className="container py-10 mx-auto space-y-8 px-4 sm:px-6">
         <motion.h1
           className="text-3xl font-bold tracking-tight"
           initial={{ opacity: 0, y: -10 }}
@@ -74,7 +74,7 @@ export default function Home() {
           Welcome to Sigil
         </motion.h1>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
           <motion.div
             className="space-y-6"
             variants={containerVariants}

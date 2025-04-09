@@ -25,9 +25,6 @@ export function ContractExamples({ apiKey, apiUrl }: ContractExamplesProps) {
   const contractCallData = {
     to: "0x1234567890123456789012345678901234567890",
     data: "0xa9059cbb000000000000000000000000e8e5d6a6e0d1f5c5b2e4e5d4c3b2a1b0c9d8e7f000000000000000000000000000000000000000000000000000000000000000a",
-    value: "0",
-    gasLimit: "100000",
-    gasPrice: "20000000000",
   };
 
   const curlExample = `curl -X POST ${fullUrl} \\
@@ -36,9 +33,6 @@ export function ContractExamples({ apiKey, apiUrl }: ContractExamplesProps) {
   -d '{
   "to": "${contractCallData.to}",
   "data": "${contractCallData.data}",
-  "value": "${contractCallData.value}",
-  "gasLimit": "${contractCallData.gasLimit}",
-  "gasPrice": "${contractCallData.gasPrice}"
 }'`;
 
   const fetchExample = `const response = await fetch("${fullUrl}", {
@@ -50,9 +44,6 @@ export function ContractExamples({ apiKey, apiUrl }: ContractExamplesProps) {
   body: JSON.stringify({
     to: "${contractCallData.to}",
     data: "${contractCallData.data}", // ERC20 transfer function call
-    value: "${contractCallData.value}",
-    gasLimit: "${contractCallData.gasLimit}",
-    gasPrice: "${contractCallData.gasPrice}"
   })
 });
 
@@ -73,9 +64,9 @@ console.log(result.transactionHash); // Blockchain transaction hash`;
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Smart Contract Interaction</CardTitle>
+        <CardTitle>Call your API</CardTitle>
         <CardDescription>
-          How to send blockchain transactions via Sigil
+          How to send execute a smart contract call via Sigil
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -89,7 +80,7 @@ console.log(result.transactionHash); // Blockchain transaction hash`;
               {curlExample}
             </pre>
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon"
               className="absolute top-2 right-2"
               onClick={() => copyToClipboard(curlExample, "curl")}

@@ -40,7 +40,7 @@ export function BalanceCard({ balance, currency }: BalanceCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Account Balance</CardTitle>
+        <CardTitle>Balance</CardTitle>
         <CardDescription>
           Your Sigil credit balance for transaction fees
         </CardDescription>
