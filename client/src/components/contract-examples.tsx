@@ -1,21 +1,25 @@
-"use client"
-
-import { useState } from "react"
-import { Copy, Check } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState } from "react";
+import { Copy, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ContractExamplesProps {
-  apiKey: string
-  apiUrl: string
+  apiKey: string;
+  apiUrl: string;
 }
 
 export function ContractExamples({ apiKey, apiUrl }: ContractExamplesProps) {
-  const [copiedCurl, setCopiedCurl] = useState(false)
-  const [copiedFetch, setCopiedFetch] = useState(false)
+  const [copiedCurl, setCopiedCurl] = useState(false);
+  const [copiedFetch, setCopiedFetch] = useState(false);
 
-  const fullUrl = `https://${apiUrl}`
+  const fullUrl = `https://${apiUrl}`;
 
   // Smart contract call data example
   const contractCallData = {
@@ -24,7 +28,7 @@ export function ContractExamples({ apiKey, apiUrl }: ContractExamplesProps) {
     value: "0",
     gasLimit: "100000",
     gasPrice: "20000000000",
-  }
+  };
 
   const curlExample = `curl -X POST ${fullUrl} \\
   -H "Authorization: Bearer ${apiKey}" \\
@@ -35,7 +39,7 @@ export function ContractExamples({ apiKey, apiUrl }: ContractExamplesProps) {
   "value": "${contractCallData.value}",
   "gasLimit": "${contractCallData.gasLimit}",
   "gasPrice": "${contractCallData.gasPrice}"
-}'`
+}'`;
 
   const fetchExample = `const response = await fetch("${fullUrl}", {
   method: "POST",
@@ -53,24 +57,26 @@ export function ContractExamples({ apiKey, apiUrl }: ContractExamplesProps) {
 });
 
 const result = await response.json();
-console.log(result.transactionHash); // Blockchain transaction hash`
+console.log(result.transactionHash); // Blockchain transaction hash`;
 
   const copyToClipboard = async (text: string, type: "curl" | "fetch") => {
-    await navigator.clipboard.writeText(text)
+    await navigator.clipboard.writeText(text);
     if (type === "curl") {
-      setCopiedCurl(true)
-      setTimeout(() => setCopiedCurl(false), 2000)
+      setCopiedCurl(true);
+      setTimeout(() => setCopiedCurl(false), 2000);
     } else {
-      setCopiedFetch(true)
-      setTimeout(() => setCopiedFetch(false), 2000)
+      setCopiedFetch(true);
+      setTimeout(() => setCopiedFetch(false), 2000);
     }
-  }
+  };
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Smart Contract Interaction</CardTitle>
-        <CardDescription>How to send blockchain transactions via Sigil</CardDescription>
+        <CardDescription>
+          How to send blockchain transactions via Sigil
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="curl">
@@ -79,31 +85,43 @@ console.log(result.transactionHash); // Blockchain transaction hash`
             <TabsTrigger value="fetch">JavaScript</TabsTrigger>
           </TabsList>
           <TabsContent value="curl" className="relative">
-            <pre className="p-4 overflow-x-auto font-mono text-sm rounded-md bg-muted">{curlExample}</pre>
+            <pre className="p-4 overflow-x-auto font-mono text-sm rounded-md bg-muted">
+              {curlExample}
+            </pre>
             <Button
               variant="ghost"
               size="icon"
               className="absolute top-2 right-2"
               onClick={() => copyToClipboard(curlExample, "curl")}
             >
-              {copiedCurl ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copiedCurl ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
               <span className="sr-only">Copy cURL example</span>
             </Button>
           </TabsContent>
           <TabsContent value="fetch" className="relative">
-            <pre className="p-4 overflow-x-auto font-mono text-sm rounded-md bg-muted">{fetchExample}</pre>
+            <pre className="p-4 overflow-x-auto font-mono text-sm rounded-md bg-muted">
+              {fetchExample}
+            </pre>
             <Button
               variant="ghost"
               size="icon"
               className="absolute top-2 right-2"
               onClick={() => copyToClipboard(fetchExample, "fetch")}
             >
-              {copiedFetch ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copiedFetch ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
               <span className="sr-only">Copy fetch example</span>
             </Button>
           </TabsContent>
         </Tabs>
       </CardContent>
     </Card>
-  )
+  );
 }

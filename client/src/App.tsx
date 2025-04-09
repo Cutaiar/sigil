@@ -6,6 +6,31 @@ import { BalanceCard } from "@/components/balance-card";
 import { ContractExamples } from "@/components/contract-examples";
 import { fetchApiCredentials } from "@/lib/mock-api";
 import { Loader2 } from "lucide-react";
+import { motion } from "motion/react";
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Stagger the animations of children
+      delayChildren: 0.3, // Delay before starting children animations
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      damping: 15,
+      stiffness: 100,
+    },
+  },
+};
 
 export default function Home() {
   const [credentials, setCredentials] = useState<{
@@ -40,25 +65,51 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container py-10 mx-auto space-y-8">
-        <h1 className="text-3xl font-bold tracking-tight">Welcome to Sigil</h1>
+        <motion.h1
+          className="text-3xl font-bold tracking-tight"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Welcome to Sigil
+        </motion.h1>
+
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-6">
+          <motion.div
+            className="space-y-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {credentials && (
               <>
-                <ApiKeyDisplay
-                  apiKey={credentials.apiKey}
-                  apiUrl={credentials.apiUrl}
-                />
-                <ContractExamples
-                  apiKey={credentials.apiKey}
-                  apiUrl={credentials.apiUrl}
-                />
+                <motion.div variants={itemVariants}>
+                  <ApiKeyDisplay
+                    apiKey={credentials.apiKey}
+                    apiUrl={credentials.apiUrl}
+                  />
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <ContractExamples
+                    apiKey={credentials.apiKey}
+                    apiUrl={credentials.apiUrl}
+                  />
+                </motion.div>
               </>
             )}
-          </div>
-          <div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.7, // Delay this column to appear after the first column
+              type: "spring",
+              damping: 15,
+              stiffness: 100,
+            }}
+          >
             <BalanceCard balance={125.5} currency="USD" />
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
